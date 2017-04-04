@@ -4,19 +4,19 @@ define(function(require){
 		monster = require('monster');
 
 	require([
-		'./submodules/devices/devices',
-		'./submodules/groups/groups',
-		'./submodules/numbers/numbers',
-		'./submodules/strategy/strategy',
-		'./submodules/callLogs/callLogs',
+		//'./submodules/devices/devices',
+		//'./submodules/groups/groups',
+		//'./submodules/numbers/numbers',
+		//'./submodules/strategy/strategy',
+		//'./submodules/callLogs/callLogs',
 		//'./submodules/users/users',
 		'./submodules/myOffice/myOffice',
-		'./submodules/featureCodes/featureCodes',
-		'./submodules/vmboxes/vmboxes'
+		//'./submodules/featureCodes/featureCodes',
+		//'./submodules/vmboxes/vmboxes'
 	]);
 
 	var app = {
-		name: 'voip',
+		name: 'userportal',
 
 		css: [ 'app' ],
 
