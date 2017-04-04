@@ -11,14 +11,78 @@
 		{{/if}}
 		<div class="dashboard-content-div dashboard-left-content">
 			<div class="dashboard-left-section clearfix">
-				<div class="left-section-header link-box" data-category="users">
-					<span class="title">{{i18n.myOffice.totalUsers}}</span>
-					<span class="number">{{totalUsers}}</span>
+				<div class="left-section-header" data-category="users">
+					<span class="title">{{i18n.userportal.my_settings}}</span>
 				</div>
 				<div class="left-section-content users-section-content">
-					{{#times totalUsers}}
-					<div class="users-element"><i class="fa-2x fa fa-male{{#compare this '<' ../totalChannels}} monster-primary-color{{/compare}}"></i></div>
-					{{/times}}
+					<form>
+                <div class="clearfix">
+                        <label>{{ i18n.userportal.enable_call_forward }}:</label>
+                        <div class="input">
+                          <label class="monster-checkbox">
+                            {{#if data.call_forward.enabled}}
+                                <input class="checkbox" id="call-forward-enabled" name="call_forward.enabled" type="checkbox" checked="checked"
+                                /><i></i>
+                            {{else}}
+                                <input class="checkbox" id="call-forward-enabled" name="call_forward.enabled" type="checkbox"/><i></i>
+                            {{/if}}
+                          </label>
+                         </div>
+                     </div>
+                    <div id="call-forward-data">
+                        <div class="clearfix">
+                            <label><span class="icon phone"/>{{ i18n.userportal.forward_calls_to }}:</label>
+                            <div class="input">
+                                <input id="ring-number-txt" name="ring-number-txt" type="text" value="{{data.call_forward.number}}"/>
+                            </div>
+                        </div>
+                        <div class="clearfix device-field">
+                            <label>{{ i18n.userportal.also_ring_my_voip_phone }}:</label>
+                            <div class="input">
+                              <label class="monster-checkbox">
+                                {{#if data.call_forward.substitute}}
+                                    <input class="checkbox" id="ring-device-checkbox" name="ring-device-checkbox" type="checkbox"/><i></i>
+                                {{else}}
+                                    <input class="checkbox" id="ring-device-checkbox" name="ring-device-checkbox" type="checkbox" checked="checked"/><i></i>
+                                {{/if}}
+                              </label>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <label>{{ i18n.userportal.keep_caller_id }}:</label>
+                            <div class="input">
+                              <label class="monster-checkbox">
+                                {{#if data.call_forward.keep_caller_id}}
+                                    <input id="call_forward_keep_caller_id" class="checkbox" name="call_forward.keep_caller_id" type="checkbox" checked="checked"/><i></i>
+                                {{else}}
+                                    <input id="call_forward_keep_caller_id" class="checkbox" name="call_forward.keep_caller_id" type="checkbox"/><i></i>
+                                {{/if}}
+                              </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label>{{ i18n.userportal.send_voicemail_to_email }}:</label>
+                        <div class="input">
+                          <label class="monster-checkbox">
+                            {{#if data.vm_to_email_enabled}}
+                                <input id="vm-to-email-checkbox" class="checkbox" name="vm-to-email-checkbox" type="checkbox" checked="checked"/><i></i>
+                            {{else}}
+                                <input id="vm-to-email-checkbox" class="checkbox" name="vm-to-email-checkbox" type="checkbox"/><i></i>
+                            {{/if}}
+                          </label>
+                        </div>
+                    </div>
+                    <div class="clearfix email-field">
+                        <label>{{ i18n.userportal.email_address }}:</label>
+                        <div class="input">
+                            <input id="vm-to-email-txt" name="vm-to-email-txt" type="text" value="{{data.email}}"/>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button id="save-settings-link" class="monster-button monster-button-success save-btn">{{ i18n.userportal.save }}</button>
+                    </div>
+                </form>
 				</div>
 			</div>
 			<div class="dashboard-left-section clearfix">
