@@ -9,7 +9,7 @@ define(function(require){
 		'./submodules/numbers/numbers',
 		'./submodules/strategy/strategy',
 		'./submodules/callLogs/callLogs',
-		'./submodules/users/users',
+		//'./submodules/users/users',
 		'./submodules/myOffice/myOffice',
 		'./submodules/featureCodes/featureCodes',
 		'./submodules/vmboxes/vmboxes'
@@ -27,8 +27,12 @@ define(function(require){
 			'es-ES': { customCss: false }
 		},
 
+		isMasqueradable: false,
+
 		requests: {},
 		subscribe: {},
+
+
 
 		subModules: ['devices', 'groups', 'numbers', 'strategy', 'callLogs', 'users', 'myOffice', 'featureCodes', 'vmboxes'],
 

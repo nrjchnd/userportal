@@ -45,9 +45,11 @@ define(function(require){
 				callback = args.callback;
 
 			self.myOfficeLoadData(function(myOfficeData) {
+				//console.log(myOfficeData);
 				var dataTemplate = {
 						isCnamEnabled: monster.util.isNumberFeatureEnabled('cnam'),
 						account: myOfficeData.account,
+						user: myOfficeData.user,
 						totalUsers: myOfficeData.users.length,
 						totalDevices: myOfficeData.devices.length,
 						unregisteredDevices: myOfficeData.devices.length - myOfficeData.devicesStatus.length,
@@ -66,6 +68,9 @@ define(function(require){
 						directoryUsers: myOfficeData.directory.users && myOfficeData.directory.users.length || 0,
 						directoryLink: myOfficeData.directoryLink
 					},
+
+					
+
 					template = $(monster.template(self, 'myOffice-layout', dataTemplate)),
 					chartOptions = {
 						animateScale: true,
@@ -75,6 +80,9 @@ define(function(require){
 						animationEasing: "easeOutCirc",
 						percentageInnerCutout: 60
 					},
+
+					s = template.find("#call-forward-data"),
+					
 					devicesChart = new Chart(template.find('#dashboard_devices_chart').get(0).getContext("2d")).Doughnut(
 						myOfficeData.devicesData.totalCount > 0 ?
 						$.map(myOfficeData.devicesData, function(val) {
@@ -114,11 +122,18 @@ define(function(require){
 						[{ value:1, color:"#DDD" }],
 						chartOptions
 					);
+					//console.log(dataTemplate);
 
 				// Trick to adjust the vertical positioning of the number types legend
 				if(myOfficeData.classifiedNumbers.length <= 3) {
 					template.find('.number-types-legend').addClass('size-'+myOfficeData.classifiedNumbers.length);
 				}
+
+				template.find("#call-forward-enabled").on("change", function() {
+					//console.log($(this).prop("checked")),
+                    $(this).prop("checked") ? s.slideDown() : s.slideUp()
+                    
+                });
 
 				self.myOfficeBindEvents({
 					parent: parent,
@@ -239,6 +254,7 @@ define(function(require){
 							parallelCallback(null, vmbox);
 						});
 					},
+
 					users: function(parallelCallback) {
 						self.callApi({
 							resource: 'user.list',
@@ -253,6 +269,20 @@ define(function(require){
 							}
 						});
 					},
+
+					user: function(parallelCallback) {
+						self.callApi({
+							resource: 'user.get',
+							data: {
+							accountId: self.accountId,
+							userId: self.userId
+							},
+							success: function(dataUser) {
+								parallelCallback && parallelCallback(null,dataUser.data);
+							}
+						});	
+					},
+
 					devices: function(parallelCallback) {
 						self.callApi({
 							resource: 'device.list',
@@ -1178,7 +1208,7 @@ define(function(require){
 					args.hasOwnProperty('error') ? args.error() : globalHandler(data, { generateError: true });
 				}
 			});
-		}
+		},					
 	};
 
 	return app;
