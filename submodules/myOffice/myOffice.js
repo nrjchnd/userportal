@@ -50,6 +50,7 @@ define(function(require){
 						isCnamEnabled: monster.util.isNumberFeatureEnabled('cnam'),
 						account: myOfficeData.account,
 						user: myOfficeData.user,
+						userDevices: myOfficeData.userDevices,
 						totalUsers: myOfficeData.users.length,
 						totalDevices: myOfficeData.devices.length,
 						unregisteredDevices: myOfficeData.devices.length - myOfficeData.devicesStatus.length,
@@ -83,6 +84,12 @@ define(function(require){
 
 					s = template.find("#call-forward-data");
 
+					_.each(dataTemplate.userDevices, function(userdevice) {
+						//templateUserDevice = monster.template(self, 'device_line', userdevice);
+						console.log(userdevice);
+						template.find('.list_devices').append('<div>' + userdevice.name + '</div>');
+					});
+
 					
 
 				template.find("#call-forward-enabled").on("change", function() {
@@ -90,6 +97,7 @@ define(function(require){
                     $(this).prop("checked") ? s.slideDown() : s.slideUp()
                     
                 });
+                //console.log(dataTemplate);
 
 				self.myOfficeBindEvents({
 					parent: parent,
@@ -253,6 +261,22 @@ define(function(require){
 							}
 						});
 					},
+
+					userDevices: function(parallelCallback) {
+                		self.callApi({
+                    		resource: "device.list",
+                    		data: {
+                        		accountId: self.accountId,
+                        		filters: {
+                            		filter_owner_id: self.userId
+                        		}
+                    		},
+                    		success: function(data) {
+                        		parallelCallback && parallelCallback(null,data.data)
+                    		}
+                		});
+            		},
+
 					devicesStatus: function(parallelCallback) {
 						self.callApi({
 							resource: 'device.getStatus',
