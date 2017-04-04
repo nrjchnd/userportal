@@ -81,53 +81,9 @@ define(function(require){
 						percentageInnerCutout: 60
 					},
 
-					s = template.find("#call-forward-data"),
-					
-					devicesChart = new Chart(template.find('#dashboard_devices_chart').get(0).getContext("2d")).Doughnut(
-						myOfficeData.devicesData.totalCount > 0 ?
-						$.map(myOfficeData.devicesData, function(val) {
-							return typeof val === 'object' ? {
-								value: val.count,
-								color: val.color
-							} : null;
-						}).sort(function(a, b) { return b.value - a.value ; }) :
-						[{ value:1, color:"#DDD" }],
-						chartOptions
-					),
-					assignedNumbersChart = new Chart(template.find('#dashboard_assigned_numbers_chart').get(0).getContext("2d")).Doughnut(
-						myOfficeData.assignedNumbersData.totalCount > 0 ?
-						$.map(myOfficeData.assignedNumbersData, function(val) {
-							return typeof val === 'object' ? {
-								value: val.count,
-								color: val.color
-							} : null;
-						}).sort(function(a, b) { return b.value - a.value ; }) :
-						[{ value:1, color:"#DDD" }],
-						chartOptions
-					),
-					numberTypesChart = new Chart(template.find('#dashboard_number_types_chart').get(0).getContext("2d")).Doughnut(
-						// $.map(myOfficeData.numberTypesData, function(val) {
-						// 	return {
-						// 		value: val.count,
-						// 		color: val.color
-						// 	};
-						// }).sort(function(a, b) { return b.value - a.value ; }),
-						myOfficeData.classifiedNumbers.length > 0 ?
-						$.map(myOfficeData.classifiedNumbers, function(val, index) {
-							return typeof val === 'object' ? {
-								value: val.count,
-								color: val.color
-							} : null;
-						}) :
-						[{ value:1, color:"#DDD" }],
-						chartOptions
-					);
-					//console.log(dataTemplate);
+					s = template.find("#call-forward-data");
 
-				// Trick to adjust the vertical positioning of the number types legend
-				if(myOfficeData.classifiedNumbers.length <= 3) {
-					template.find('.number-types-legend').addClass('size-'+myOfficeData.classifiedNumbers.length);
-				}
+					
 
 				template.find("#call-forward-enabled").on("change", function() {
 					//console.log($(this).prop("checked")),
