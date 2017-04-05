@@ -29,6 +29,7 @@ define(function(require){
 		/* Users */
 		/* args: parent and deviceId */
 		devicesRender: function(pArgs) {
+
 			var self = this,
 				args = pArgs || {},
 				parent = args.parent || $('.right-content'),
@@ -44,6 +45,7 @@ define(function(require){
 					templateDevice = monster.template(self, 'devices-row', device);
 
 					template.find('.devices-rows').append(templateDevice);
+
 				});
 
 				self.devicesBindEvents(template, parent, dataTemplate);
@@ -90,6 +92,7 @@ define(function(require){
 					rows.is(':visible') ? emptySearch.hide() : emptySearch.show();
 				}
 			});
+
 
 			template.find('.switch-state').on('change', function() {
 				var toggle = $(this),

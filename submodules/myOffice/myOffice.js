@@ -51,6 +51,7 @@ define(function(require){
 						account: myOfficeData.account,
 						user: myOfficeData.user,
 						userDevices: _.toArray(myOfficeData.userDevices).sort(function(a, b) { return self.naturalCompare(a.name, b.name) ; }),
+						userDevicesStatus: myOfficeData.devicesStatus,
 						totalUsers: myOfficeData.users.length,
 						totalDevices: myOfficeData.devices.length,
 						unregisteredDevices: myOfficeData.devices.length - myOfficeData.devicesStatus.length,
@@ -84,11 +85,34 @@ define(function(require){
 
 					s = template.find("#call-forward-data");
 					//console.log(dataTemplate.userDevices);
+
 					_.each(dataTemplate.userDevices, function(userdevice) {
-						//templateUserDevice = monster.template(self, 'device_line', userdevice);
-						//console.log(userdevice);
-						template.find('.list_devices').append('<div>' + userdevice.name + '</div>');
+						var classStatus = 'disabled';
+						templateUserDevice = monster.template(self, 'device_line', userdevice);
+						template.find('.type').removeClass('unregistered registered disabled');
+						console.log(userdevice);
+						if(userdevice.enabled === true) {
+							classStatus = 'unregistered';
+
+							_.each(dataTemplate.userDevicesStatus, function(status) {
+								console.log(status.device_id);
+								if(status.device_id === userdevice.id) {
+									//console.log(status.id);
+									if(status.registered === true) {
+										classStatus = 'registered';
+									}
+								}
+
+								return false;
+							});
+						}
+						template.find('.type').addClass(classStatus);
+
+						template.find('.list_devices').append(templateUserDevice);
+
+						//template.find('.list_devices').append('<div>' + userdevice.name + '</div>');
 					});
+					//console.log(dataTemplate);
 
 					
 
@@ -1204,7 +1228,26 @@ define(function(require){
     		}
 
     		return ax.length - bx.length;
-		}					
+		},
+
+		devicesGetDevice: function(deviceId, callbackSuccess, callbackError) {
+			var self = this;
+
+			self.callApi({
+				resource: 'device.get',
+				data: {
+					accountId: self.accountId,
+					deviceId: deviceId
+				},
+				success: function(data) {
+					callbackSuccess && callbackSuccess(data.data);
+				},
+				error: function(data) {
+					callbackError && callbackError(data);
+				}
+			});
+		},
+
 	};
 
 	return app;
