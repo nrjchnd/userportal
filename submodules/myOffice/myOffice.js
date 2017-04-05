@@ -38,6 +38,8 @@ define(function(require){
 			"#6F7C7D"  // Grey
 		],
 
+
+
 		/* My Office */
 		myOfficeRender: function(args) {
 			var self = this,
@@ -46,6 +48,18 @@ define(function(require){
 
 			self.myOfficeLoadData(function(myOfficeData) {
 				//console.log(myOfficeData);
+				mapIconClass = {
+					cellphone: 'fa fa-phone',
+					smartphone: 'icon-telicon-mobile-phone',
+					landline: 'icon-telicon-home',
+					mobile: 'icon-telicon-sprint-phone',
+					softphone: 'icon-telicon-soft-phone',
+					sip_device: 'icon-telicon-voip-phone',
+					sip_uri: 'icon-telicon-voip-phone',
+					fax: 'icon-telicon-fax',
+					ata: 'icon-telicon-ata'
+				};
+
 				var dataTemplate = {
 						isCnamEnabled: monster.util.isNumberFeatureEnabled('cnam'),
 						account: myOfficeData.account,
@@ -71,6 +85,7 @@ define(function(require){
 						directoryLink: myOfficeData.directoryLink
 					},
 
+
 					
 
 					template = $(monster.template(self, 'myOffice-layout', dataTemplate)),
@@ -88,14 +103,17 @@ define(function(require){
 
 					_.each(dataTemplate.userDevices, function(userdevice) {
 						var classStatus = 'disabled';
+							userdevice.friendlyIconClass = mapIconClass[userdevice.device_type];
+							userdevice.friendlyType = self.i18n.active().devices.types[userdevice.device_type],
+
 						templateUserDevice = monster.template(self, 'device_line', userdevice);
 						template.find('.type').removeClass('unregistered registered disabled');
-						console.log(userdevice);
+						//console.log(userdevice);
 						if(userdevice.enabled === true) {
 							classStatus = 'unregistered';
 
 							_.each(dataTemplate.userDevicesStatus, function(status) {
-								console.log(status.device_id);
+								//console.log(status.device_id);
 								if(status.device_id === userdevice.id) {
 									//console.log(status.id);
 									if(status.registered === true) {
@@ -106,6 +124,9 @@ define(function(require){
 								return false;
 							});
 						}
+						
+						console.log(userdevice);
+
 						template.find('.type').addClass(classStatus);
 
 						template.find('.list_devices').append(templateUserDevice);
