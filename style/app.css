@@ -35,3 +35,15 @@
     border-radius: 0px;
     margin-bottom: 0px;
 }
+
+#myoffice_container .dashboard-content .dashboard-content-div .devices-grid .grid-row {
+    border-right: 1px solid #eee;
+    display: inline-block;
+    overflow: hidden;
+    padding-left: 10px;
+    width: 20%;
+    float: left;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}

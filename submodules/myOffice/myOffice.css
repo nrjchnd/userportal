@@ -78,7 +78,7 @@
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
-#myoffice_container .dashboard-content-div.dashboard-left-content {
+#myoffice_container .dashboard-content-div .dashboard-left-content {
 	padding-right: 10px;
 }
 #myoffice_container .dashboard-left-content .left-section-header  {
@@ -430,4 +430,16 @@
 @keyframes warning-pulse-box {
 	0% { box-shadow: 0px 0px 5px #fbb450 inset, 0px 0px 5px #f89406; }
 	100% { box-shadow: 0px 0px 30px #fbb450 inset, 0px 0px 10px #f89406; }
+}
+
+#myoffice_container .dashboard-content-div .devices_grid .grid-row .grid-cell {
+   border-right: 1px solid #eee;
+    display: inline-block;
+    overflow: hidden;
+    padding-left: 10px;
+    width: 20%;
+    float: left;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
