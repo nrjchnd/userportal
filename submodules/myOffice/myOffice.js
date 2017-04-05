@@ -50,7 +50,7 @@ define(function(require){
 						isCnamEnabled: monster.util.isNumberFeatureEnabled('cnam'),
 						account: myOfficeData.account,
 						user: myOfficeData.user,
-						userDevices: myOfficeData.userDevices,
+						userDevices: _.toArray(myOfficeData.userDevices).sort(function(a, b) { return self.naturalCompare(a.name, b.name) ; }),
 						totalUsers: myOfficeData.users.length,
 						totalDevices: myOfficeData.devices.length,
 						unregisteredDevices: myOfficeData.devices.length - myOfficeData.devicesStatus.length,
@@ -83,10 +83,10 @@ define(function(require){
 					},
 
 					s = template.find("#call-forward-data");
-
+					//console.log(dataTemplate.userDevices);
 					_.each(dataTemplate.userDevices, function(userdevice) {
 						//templateUserDevice = monster.template(self, 'device_line', userdevice);
-						console.log(userdevice);
+						//console.log(userdevice);
 						template.find('.list_devices').append('<div>' + userdevice.name + '</div>');
 					});
 
@@ -1188,7 +1188,23 @@ define(function(require){
 					args.hasOwnProperty('error') ? args.error() : globalHandler(data, { generateError: true });
 				}
 			});
-		},					
+		},
+
+		naturalCompare: function(a, b) {
+    		var ax = [], bx = [];
+
+    		a.replace(/(\d+)|(\D+)/g, function(_, $1, $2) { ax.push([$1 || Infinity, $2 || ""]) });
+    		b.replace(/(\d+)|(\D+)/g, function(_, $1, $2) { bx.push([$1 || Infinity, $2 || ""]) });
+    
+    		while(ax.length && bx.length) {
+        		var an = ax.shift();
+        		var bn = bx.shift();
+        		var nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+        		if(nn) return nn;
+    		}
+
+    		return ax.length - bx.length;
+		}					
 	};
 
 	return app;
