@@ -99,7 +99,6 @@ define(function(require){
 					},
 
 					s = template.find("#call-forward-data");
-					//console.log(template);
 
 					_.each(dataTemplate.userDevices, function(userdevice) {
 						var classStatus = 'disabled';
@@ -108,37 +107,26 @@ define(function(require){
 
 						templateUserDevice = $(monster.template(self, 'device_line', userdevice));
 
-						//templateUserDevice = monster.template(self, 'devices_row', userdevice);
 						templateUserDevice.find('.type').removeClass('unregistered registered disabled');
-						//console.log(templateUserDevice);
+
 						if(userdevice.enabled === true) {
 							userdevice.classStatus = 'unregistered';
 
 							_.each(dataTemplate.userDevicesStatus, function(status) {
-								//console.log(status);
+
 								if(status.device_id === userdevice.id) {
-									//console.log(status);
+
 									if(status.registered === true) {
 										classStatus = 'registered';
-										//template.find('.type').addClass(classStatus);
 									}
 								}
-
-							//console.log(userdevice)
 								return false;
 							});
 						}
 						
-						templateUserDevice.find('.type').addClass(classStatus);
-						//console.log(userdevice);
-
-						
-
+						templateUserDevice.find('.type').addClass(classStatus);					
 						template.find('.list_devices').append(templateUserDevice);
-
-						//template.find('.list_devices').append('<div>' + userdevice.name + '</div>');
-					});
-					//console.log(templateUserDevice);
+						});
 
 					
 
