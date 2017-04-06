@@ -99,7 +99,7 @@ define(function(require){
 					},
 
 					s = template.find("#call-forward-data");
-					//console.log(dataTemplate.userDevices);
+					console.log(template);
 
 					_.each(dataTemplate.userDevices, function(userdevice) {
 						var classStatus = 'disabled';
@@ -107,25 +107,27 @@ define(function(require){
 							userdevice.friendlyType = self.i18n.active().devices.types[userdevice.device_type],
 
 						templateUserDevice = monster.template(self, 'device_line', userdevice);
+
+						//templateUserDevice = monster.template(self, 'devices_row', userdevice);
 						template.find('.type').removeClass('unregistered registered disabled');
-						//console.log(userdevice);
+						//console.log(templateUserDevice);
 						if(userdevice.enabled === true) {
-							classStatus = 'unregistered';
+							userdevice.classStatus = 'unregistered';
 
 							_.each(dataTemplate.userDevicesStatus, function(status) {
 								//console.log(status.device_id);
 								if(status.device_id === userdevice.id) {
 									//console.log(status.id);
 									if(status.registered === true) {
-										classStatus = 'registered';
+										userdevice.classStatus = 'registered';
 									}
 								}
-
+							//console.log(userdevice)
 								return false;
 							});
 						}
 						
-						console.log(userdevice);
+						//console.log(userdevice);
 
 						template.find('.type').addClass(classStatus);
 
@@ -133,7 +135,7 @@ define(function(require){
 
 						//template.find('.list_devices').append('<div>' + userdevice.name + '</div>');
 					});
-					//console.log(dataTemplate);
+					//console.log(templateUserDevice);
 
 					
 
