@@ -99,37 +99,40 @@ define(function(require){
 					},
 
 					s = template.find("#call-forward-data");
-					console.log(template);
+					//console.log(template);
 
 					_.each(dataTemplate.userDevices, function(userdevice) {
 						var classStatus = 'disabled';
 							userdevice.friendlyIconClass = mapIconClass[userdevice.device_type];
 							userdevice.friendlyType = self.i18n.active().devices.types[userdevice.device_type],
 
-						templateUserDevice = monster.template(self, 'device_line', userdevice);
+						templateUserDevice = $(monster.template(self, 'device_line', userdevice));
 
 						//templateUserDevice = monster.template(self, 'devices_row', userdevice);
-						template.find('.type').removeClass('unregistered registered disabled');
+						templateUserDevice.find('.type').removeClass('unregistered registered disabled');
 						//console.log(templateUserDevice);
 						if(userdevice.enabled === true) {
 							userdevice.classStatus = 'unregistered';
 
 							_.each(dataTemplate.userDevicesStatus, function(status) {
-								//console.log(status.device_id);
+								//console.log(status);
 								if(status.device_id === userdevice.id) {
-									//console.log(status.id);
+									//console.log(status);
 									if(status.registered === true) {
-										userdevice.classStatus = 'registered';
+										classStatus = 'registered';
+										//template.find('.type').addClass(classStatus);
 									}
 								}
+
 							//console.log(userdevice)
 								return false;
 							});
 						}
 						
+						templateUserDevice.find('.type').addClass(classStatus);
 						//console.log(userdevice);
 
-						template.find('.type').addClass(classStatus);
+						
 
 						template.find('.list_devices').append(templateUserDevice);
 

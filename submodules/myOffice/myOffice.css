@@ -505,3 +505,7 @@
 #myoffice_container .devices-grid .grid-row .grid-cell.type .first-line > i {
     font-size: 24px;
 }
+
+#myoffice_container .devices-grid .grid-row .grid-cell.registered i {
+    color: #44CC44;
+}
